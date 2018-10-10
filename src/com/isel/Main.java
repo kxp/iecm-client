@@ -38,6 +38,15 @@ public class Main {
         if (client == null){
             return;
         }
-        client.Start();
+
+        try {
+
+            client.Initialize();
+            client.Start();
+        }
+        catch (Exception excp){
+            excp.printStackTrace();
+            return;
+        }
     }
 }

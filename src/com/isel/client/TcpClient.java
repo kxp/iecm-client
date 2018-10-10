@@ -51,7 +51,7 @@ public final class TcpClient implements IClient{
                 converted = streamFromServer.readUTF();
                 System.out.print(converted);
 
-            }while (converted !="END" || converted != "STOP")
+            }while (converted !="END" || converted != "STOP");
         }
         catch(Exception excp) {
             excp.printStackTrace();
