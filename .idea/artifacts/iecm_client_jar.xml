@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="iecm-client:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/iecm_client_jar</output-path>
+    <root id="archive" name="iecm-client.jar">
+      <element id="module-output" name="iecm-client" />
+    </root>
+  </artifact>
+</component>

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="57998332-0199-474b-96aa-1849928dd9b3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/com/isel/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/isel/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/isel/client/TcpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/isel/client/TcpClient.java" afterDir="false" />
-    </list>
+    <list default="true" id="57998332-0199-474b-96aa-1849928dd9b3" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,11 +90,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/isel/client/TcpClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="30">
+              <caret line="2" column="30" lean-forward="true" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -249,7 +243,10 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538946973676" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/artifacts/iecm_client_jar/iecm-client.jar" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -263,7 +260,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JAR Application.ExportClient">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.isel.Main" />
       <module name="iecm-client" />
@@ -274,6 +271,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ExportClient" type="JarApplication" factoryName="JAR Application">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/iecm_client_jar/iecm-client.jar" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="JAR Application.ExportClient" />
+      <item itemvalue="Application.Main" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
@@ -290,16 +297,15 @@
       <workItem from="1538944658019" duration="64000" />
       <workItem from="1538944831826" duration="2026000" />
       <workItem from="1538948378456" duration="28000" />
-      <workItem from="1539198690932" duration="3337000" />
+      <workItem from="1539198690932" duration="3710000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5455000" />
+    <option name="totallyTimeSpent" value="5828000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="51" y="-10" width="1869" height="1090" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25836533" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -406,11 +412,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/isel/client/TcpClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="30">
+          <caret line="2" column="30" lean-forward="true" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
         </state>
       </provider>
     </entry>
