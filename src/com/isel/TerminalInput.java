@@ -44,4 +44,35 @@ public class TerminalInput {
 
         return line;
     }
+
+    public String ReadUser(){
+
+        System.out.println("Insert your username:");
+        String line = "";
+        try {
+
+            line = bufferedReader.readLine();
+        }
+        catch (Exception excp){
+            excp.printStackTrace();
+        }
+
+        return line;
+    }
+
+    public String ReadMessage(){
+
+        System.out.print("Message:");
+        String line = "";
+        try {
+
+            line = bufferedReader.readLine();
+        }
+        catch (Exception excp){
+            excp.printStackTrace();
+        }
+
+        return line;
+    }
+
 }

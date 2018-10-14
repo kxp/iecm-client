@@ -34,7 +34,7 @@ public class Main {
         }
 
         //Instanciates the client with the specified ip
-        IClient client = ClientFactory.CreateServer(clientType, "localhost");
+        IClient client = ClientFactory.CreateServer(clientType, /*"localhost"*/ "192.168.1.99");
         if (client == null){
             return;
         }

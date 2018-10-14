@@ -7,6 +7,8 @@ public class ClientFactory {
     private static int UdpPort = 11001;
     private static int MulticastPort = 11002;
 
+    private static String MulticastIp = "224.0.0.3";
+
     public static IClient CreateServer (EClientType connectionType, String serverIp) {
 
         IClient client = null;
@@ -19,7 +21,7 @@ public class ClientFactory {
                 client = new UdpClient(serverIp, UdpPort);
                 break;
             case MULTICAST:
-                client = new MulticastClient(serverIp,MulticastPort);
+                client = new MulticastClient(MulticastIp,MulticastPort);
                 break;
         }
 
