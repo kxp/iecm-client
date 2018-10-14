@@ -11,9 +11,8 @@ public final class TcpClient implements IClient{
     private int serverPort;
 
     private Socket clientTcpSocket;
-    private DataInputStream streamFromServer;
     private DataOutputStream streamToServer;
-
+    private BufferedReader dataFromServer;
 
     public TcpClient(String remoteIp, int remotePort){
         this.serverIp = remoteIp;
@@ -25,7 +24,7 @@ public final class TcpClient implements IClient{
 
         try {
             clientTcpSocket = new Socket(serverIp, serverPort);
-            streamFromServer = new DataInputStream(clientTcpSocket.getInputStream());
+            dataFromServer = new BufferedReader( new InputStreamReader(clientTcpSocket.getInputStream()));
             streamToServer = new DataOutputStream(clientTcpSocket.getOutputStream());
         }
         catch (Exception excp){
@@ -48,10 +47,10 @@ public final class TcpClient implements IClient{
                 streamToServer.writeUTF(input);
                 streamToServer.flush();
 
-                converted = streamFromServer.readUTF();
-                System.out.print(converted);
+                converted = dataFromServer.readLine();
+                System.out.println(converted);
 
-            }while (converted !="END" || converted != "STOP");
+            }while (converted.equals("END") == false  && converted.equals("STOP") == false);
         }
         catch(Exception excp) {
             excp.printStackTrace();
@@ -64,6 +63,7 @@ public final class TcpClient implements IClient{
     @Override
     public void Stop() {
         try {
+            System.out.println("The server is stopping");
             Close();
         }
         catch (Exception excp){
@@ -75,19 +75,20 @@ public final class TcpClient implements IClient{
 
     private void Close() throws IOException {
         try {
-            if (clientTcpSocket != null){
-                clientTcpSocket.close();
-                clientTcpSocket = null;
-            }
 
             if (streamToServer != null) {
                 streamToServer.close();
                 streamToServer= null;
             }
 
-            if (streamFromServer != null) {
-                streamFromServer.close();
-                streamFromServer = null;
+            if (dataFromServer != null) {
+                dataFromServer.close();
+                dataFromServer = null;
+            }
+
+            if (clientTcpSocket != null){
+                clientTcpSocket.close();
+                clientTcpSocket = null;
             }
         }
         catch (Exception excp){

@@ -1,18 +1,19 @@
 package com.isel.client;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
+import com.isel.TerminalInput;
+
+import java.io.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 public final class UdpClient implements IClient {
 
     private String serverIp;
     private int serverPort;
 
-    private Socket clientTcpSocket;
-    private DataInputStream streamFromServer;
-    private DataOutputStream streamToServer;
+    private DatagramSocket clientUDPSocket;
+    private InetAddress destInetAddress;
 
     public UdpClient(String remoteIp, int remotePort){
         this.serverIp = remoteIp;
@@ -23,9 +24,8 @@ public final class UdpClient implements IClient {
     public void Initialize() throws IOException {
 
         try {
-            clientTcpSocket = new Socket(serverIp, serverPort);
-            streamFromServer = new DataInputStream(clientTcpSocket.getInputStream());
-            streamToServer = new DataOutputStream(clientTcpSocket.getOutputStream());
+            this.clientUDPSocket = new DatagramSocket();
+            this.destInetAddress = InetAddress.getByName(this.serverIp);
         }
         catch (Exception excp){
             //If this fails the purpose of the program fails, its a critical error and migth be related with ports already in use.
@@ -37,11 +37,36 @@ public final class UdpClient implements IClient {
     @Override
     public void Start() {
 
+        TerminalInput terminalInput = TerminalInput.getTerminalInputInstance();
+
+        String converted = "";
+        try {
+            do {
+                String input = terminalInput.ReadFromTerminal();
+                byte[] sendData = input.getBytes();
+
+                DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, this.destInetAddress, this.serverPort);
+                this.clientUDPSocket.send(sendPacket);
+
+                byte[] receiveData = new byte[512];
+
+                DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                this.clientUDPSocket.receive(receivePacket);
+
+                converted = new String(receivePacket.getData());
+                converted = converted.trim();
+                System.out.println(converted);
+            } while (converted.equals("END") == false && converted.equals("STOP") == false);
+
+        }
+        catch (Exception excp){
+            excp.printStackTrace();
+        }
     }
 
     @Override
     public void Stop() {
-
+        this.clientUDPSocket.close();
     }
 }
 

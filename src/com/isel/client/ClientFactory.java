@@ -7,11 +7,11 @@ public class ClientFactory {
     private static int UdpPort = 11001;
     private static int MulticastPort = 11002;
 
-    public static IClient CreateServer (EClientType serverType, String serverIp) {
+    public static IClient CreateServer (EClientType connectionType, String serverIp) {
 
         IClient client = null;
 
-        switch (serverType) {
+        switch (connectionType) {
             case TCP:
                 client = new TcpClient(serverIp, TcpPort);
                 break;
