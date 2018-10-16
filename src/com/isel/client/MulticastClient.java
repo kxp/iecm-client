@@ -2,6 +2,7 @@ package com.isel.client;
 
 import com.isel.TerminalInput;
 
+import javax.xml.crypto.Data;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -11,9 +12,16 @@ public final class MulticastClient implements IClient{
 
     private String serverIp;
     private int serverPort;
+    private boolean running;
+
+    //used to receive the messages from the board
+    private Thread listenerThread;
+    private String myIp;
 
     private InetAddress multicastGroup;
     private MulticastSocket multicastSocket;
+    private DatagramSocket sendingSocket;
+    private DatagramSocket receivingSocket;
 
     public MulticastClient(String remoteIp, int remotePort){
         this.serverIp = remoteIp;
@@ -28,7 +36,13 @@ public final class MulticastClient implements IClient{
             this.multicastGroup = InetAddress.getByName(serverIp);
             this.multicastSocket.joinGroup(this.multicastGroup);
 
+            //lets reuse the same socket to send messages.
+            this.sendingSocket = new DatagramSocket();
+            this.running = true;
+            this.myIp =  InetAddress.getLocalHost().getHostAddress();
+
             System.out.println("You are connected to the chat room at " + serverIp + ":" + serverPort);
+            System.out.println("Your IP is: " + this.myIp);
             RegisterUser();
             }
         catch (Exception excp){
@@ -40,14 +54,16 @@ public final class MulticastClient implements IClient{
 
     @Override
     public void Start() {
+
+        listenerThread = new Thread(this::Listener);
+        listenerThread.start();
         //we need to create a thread to read from the socket and print in the command line
         do {
 
             String message = TerminalInput.getTerminalInputInstance().ReadMessage();
             SendMessage(message);
 
-        }while (true);
-
+        }while (running);
     }
 
     @Override
@@ -56,8 +72,15 @@ public final class MulticastClient implements IClient{
         if (this.multicastSocket == null)
             return;
 
+        //stops the listener thread.
+        if ( this.listenerThread != null && this.listenerThread.isAlive()){
+            listenerThread.stop();
+        }
+
         System.out.println("You are now disconnecting from the server");
         try {
+
+            sendingSocket.close();
             this.multicastSocket.close();
             this.multicastSocket.leaveGroup(this.multicastGroup);
         }
@@ -65,6 +88,34 @@ public final class MulticastClient implements IClient{
             excp.printStackTrace();
         }
     }
+
+
+    //private methods
+
+
+    private void Listener(){
+
+        try {
+
+            do {
+                byte[] rcvdata = new byte[512];
+                DatagramPacket udpPacket = new DatagramPacket(rcvdata, rcvdata.length);
+
+                this.multicastSocket.receive(udpPacket);
+                String pktIP = udpPacket.getAddress().toString();
+                if(pktIP.equals(this.myIp) == true){
+                    continue;
+                }
+                String message = new String(udpPacket.getData()).trim();
+                System.out.println(message);
+
+            } while (running);
+        }
+        catch (Exception excp){
+            excp.printStackTrace();
+        }
+    }
+
 
     private void RegisterUser(){
 
@@ -76,20 +127,16 @@ public final class MulticastClient implements IClient{
     private  void SendMessage(String message){
 
         try {
-            DatagramSocket socket = new DatagramSocket();
-
             byte[] msg = message.getBytes();
             DatagramPacket packet = new DatagramPacket(msg, msg.length, this.multicastGroup, serverPort);
 
-            socket.send(packet);
-            socket.close();
+            this.sendingSocket.send(packet);
 
         }catch (Exception excp){
             excp.printStackTrace();
         }
 
     }
-
 
 
 }
