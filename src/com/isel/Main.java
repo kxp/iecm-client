@@ -10,13 +10,17 @@ import java.io.InputStreamReader;
 public class Main {
 
     public static void main(String[] args) {
-        InputStreamReader isr = new InputStreamReader(System.in);
+
+        System.out.println("Usage: appname type ip");
+		System.out.println("Type: udp, tcp, multicast");   
+
+		InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
         EClientType clientType = EClientType.NOTSPECIFIED;
 
-        if (args.length > 1) {
+        if (args.length >= 1) {
             try {
-                clientType = EClientType.valueOf(args[1].toUpperCase());
+                clientType = EClientType.valueOf(args[0].toUpperCase());
             } catch (Exception excp) {
                 excp.printStackTrace();
                 return;
@@ -36,7 +40,12 @@ public class Main {
 
         String serverIp ="";
         if(clientType != EClientType.MULTICAST){
-            serverIp = TerminalInput.getTerminalInputInstance().ReadServerIP();
+
+            if(args.length == 2) {
+                serverIp = args[1];
+            }else {
+                serverIp = TerminalInput.getTerminalInputInstance().ReadServerIP();
+            }
         }
 
         //Instanciates the client with the specified ip

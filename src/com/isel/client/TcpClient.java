@@ -50,7 +50,7 @@ public final class TcpClient implements IClient{
                 converted = dataFromServer.readLine();
                 System.out.println(converted);
 
-            }while (converted.equals("END") == false  && converted.equals("STOP") == false);
+            }while ("END".equals(converted) == false  && "STOP".equals(converted) == false);
         }
         catch(Exception excp) {
             excp.printStackTrace();
@@ -63,7 +63,7 @@ public final class TcpClient implements IClient{
     @Override
     public void Stop() {
         try {
-            System.out.println("The server is stopping");
+            System.out.println("The application is stopping");
             Close();
         }
         catch (Exception excp){

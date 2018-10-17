@@ -59,10 +59,15 @@ public final class MulticastClient implements IClient{
         do {
 
             String message = TerminalInput.getTerminalInputInstance().ReadMessage();
+
+            if("!QUIT!".equals(message)){
+                break;
+            }
             String completeMessage = this.userName + ":" + message;
             SendMessage(completeMessage);
 
         }while (running);
+        Stop();
     }
 
     @Override
@@ -75,9 +80,9 @@ public final class MulticastClient implements IClient{
         System.out.println("You are now disconnecting from the server");
         try {
 
-            sendingSocket.close();
-            this.multicastSocket.close();
+            this.sendingSocket.close();
             this.multicastSocket.leaveGroup(this.multicastGroup);
+            this.multicastSocket.close();
         }
         catch (Exception excp) {
             excp.printStackTrace();
