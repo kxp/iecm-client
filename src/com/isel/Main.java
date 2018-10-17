@@ -33,7 +33,11 @@ public class Main {
             }
         }
 
-        String serverIp = TerminalInput.getTerminalInputInstance().ReadServerIP();
+
+        String serverIp ="";
+        if(clientType != EClientType.MULTICAST){
+            serverIp = TerminalInput.getTerminalInputInstance().ReadServerIP();
+        }
 
         //Instanciates the client with the specified ip
         IClient client = ClientFactory.CreateServer(clientType, serverIp);

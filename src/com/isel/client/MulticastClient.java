@@ -71,11 +71,7 @@ public final class MulticastClient implements IClient{
         if (this.multicastSocket == null)
             return;
 
-        //stops the listener thread.
-        if ( this.listenerThread != null && this.listenerThread.isAlive()){
-            listenerThread.stop();
-        }
-
+        running = false;
         System.out.println("You are now disconnecting from the server");
         try {
 
