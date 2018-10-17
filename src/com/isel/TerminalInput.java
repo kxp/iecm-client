@@ -62,7 +62,22 @@ public class TerminalInput {
 
     public String ReadMessage(){
 
-        System.out.print("Message:");
+        //System.out.print("Message:");
+        String line = "";
+        try {
+
+            line = bufferedReader.readLine();
+        }
+        catch (Exception excp){
+            excp.printStackTrace();
+        }
+
+        return line;
+    }
+
+    public String ReadServerIP(){
+
+        System.out.print("Insert the server IP:\n");
         String line = "";
         try {
 

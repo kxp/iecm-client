@@ -1,10 +1,6 @@
 package com.isel.client;
 
 import com.isel.TerminalInput;
-
-import javax.xml.crypto.Data;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
 
@@ -21,7 +17,7 @@ public final class MulticastClient implements IClient{
     private InetAddress multicastGroup;
     private MulticastSocket multicastSocket;
     private DatagramSocket sendingSocket;
-    private DatagramSocket receivingSocket;
+    private String userName;
 
     public MulticastClient(String remoteIp, int remotePort){
         this.serverIp = remoteIp;
@@ -40,10 +36,12 @@ public final class MulticastClient implements IClient{
             this.sendingSocket = new DatagramSocket();
             this.running = true;
             this.myIp =  InetAddress.getLocalHost().getHostAddress();
+            this.userName = TerminalInput.getTerminalInputInstance().ReadUser();
+
 
             System.out.println("You are connected to the chat room at " + serverIp + ":" + serverPort);
             System.out.println("Your IP is: " + this.myIp);
-            RegisterUser();
+            System.out.println("Write your message and press enter");
             }
         catch (Exception excp){
             //If this fails the purpose of the program fails, its a critical error and migth be related with ports already in use.
@@ -61,7 +59,8 @@ public final class MulticastClient implements IClient{
         do {
 
             String message = TerminalInput.getTerminalInputInstance().ReadMessage();
-            SendMessage(message);
+            String completeMessage = this.userName + ":" + message;
+            SendMessage(completeMessage);
 
         }while (running);
     }
@@ -117,13 +116,6 @@ public final class MulticastClient implements IClient{
     }
 
 
-    private void RegisterUser(){
-
-        String userName = TerminalInput.getTerminalInputInstance().ReadUser();
-        SendMessage(userName);
-
-    }
-
     private  void SendMessage(String message){
 
         try {
@@ -135,7 +127,6 @@ public final class MulticastClient implements IClient{
         }catch (Exception excp){
             excp.printStackTrace();
         }
-
     }
 
 
